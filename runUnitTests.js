@@ -5,7 +5,7 @@ try {
   // `unit test` input defined in action metadata file
   targetURL = core.getInput('target-url');
   console.log(`TargetURL: ${targetURL}`);
-  SUToken = core.getInput('outsystems-serviceuser-token');
+  SUToken = process.env.OUTSYSTEMSSERVICEUSER_TOKEN //core.getInput('outsystems-serviceuser-token');
   console.log(`BearerToken: ${SUToken}`);  
   
 
@@ -27,8 +27,8 @@ try {
 				console.log(body)
 				testRunId = body.TestRunId
 			}else{
-				console.log('statuscode: ',response.statuscode);
 				var resultString = String(response);
+				console.log('statuscode: ',resultString);
 				console.log(`an issue occurred, response: ${resultString}`)
 				return `an issue occurred, response: ${resultString}`;
 			};
