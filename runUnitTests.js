@@ -8,13 +8,47 @@ try {
   SUToken = core.getInput('outsystems-serviceuser-token');
   console.log(`BearerToken: ${SUToken}`);  
   
-
+	/* F. Grooten
+		looked at 'request' nodejs library. though found out it is outdated. > best to use the nodejs included https library for webservice requests
+		https://stackoverflow.com/questions/13121590/steps-to-send-a-https-request-to-a-rest-service-in-node-js		
+	*/
+	
 	// call the webservice which triggers the unit tests and returns a testRunId
+
+	var testRunId = 0	
+	
+	const https = require('https');
+
+	const options = {
+	  host: targetURL,
+	  port: 443,
+	  path: '/UTF_Connector/rest/TestControler/RunAll',
+	  method: 'GET',
+	  headers:{
+		  Authorization: 'Bearer '+SUToken
+	  }
+	};
+
+	const req = https.request(options, (res) => {
+	  console.log('statusCode:', res.statusCode);
+	  console.log('headers:', res.headers);
+
+	  res.on('data', (d) => {
+		process.stdout.write(d);
+		testRunId = d.TestRunId;
+	  });
+	});
+	req.on('error', (e) => {
+	  console.error(e);
+	});
+	req.end();
+
+	
+	/*
 	//https://dev.to/isalevine/three-ways-to-retrieve-json-from-the-web-using-node-js-3c88
-	var testRunId = 0
 	const request = require('request');
 
-	var options = {	url: targetURL+'/UTF_Connector/rest/TestControler/RunAll',
+	var options = {	url: targetURL,
 					json: true,
 					Authorization: 'Bearer '+SUToken
 					};
@@ -34,7 +68,7 @@ try {
 		};
 		
 	request(options, callback);
-	
+	*/
   
   const isSuccess = (testRunId!=0);
   core.setOutput("success", isSuccess);
