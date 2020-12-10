@@ -14,7 +14,9 @@ try {
   */
 	// call the webservice which triggers the unit tests and returns a testRunId
 	//https://www.w3schools.com/js/js_json_http.asp
+	//https://stackoverflow.com/questions/32604460/xmlhttprequest-module-not-defined-found
 	var testRunId = 0
+	var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 	var request = new XMLHttpRequest();
     request.open("GET", targetURL+'/UTF_Connector/rest/TestControler/RunAll', false);
     request.setRequestHeader("Content-Type", "application/json");
