@@ -20,12 +20,14 @@ try {
 					};
 	var callback = (error,response,body) => {
 			if (error) {
-				return  console.log(error)
-			};
-			if (!error && response.statusCode == 200) {
+				console.log(error)
+				throw error
+			}else if(response.statusCode == 200 || response.statusCode ==204) {
 				// do something with JSON, using the 'body' variable
 				console.log(body)
 				testRunId = body.TestRunId
+			}else{
+				throw 'an issue occurred'
 			};
 		};
 		
