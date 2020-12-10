@@ -4,9 +4,9 @@ const github = require('@actions/github');
 try {
   // `unit test` input defined in action metadata file
   const targetURL = core.getInput('target-url');
-  console.log(`URL ${targetURL}`);
+  console.log(`TargetURL: ${targetURL}`);
   const SUToken = core.getInput('outsystems-serviceuser-token');
-  console.log(`Token ${SUToken}`);  
+  console.log(`BearerToken: ${SUToken}`);  
   
 
 	// call the webservice which triggers the unit tests and returns a testRunId
@@ -27,8 +27,8 @@ try {
 				console.log(body)
 				testRunId = body.TestRunId
 			}else{
-				console.log('an issue occurred')
-				return 'an issue occurred';
+				console.log('an issue occurred, response statuscode is: ${response.statusCode}')
+				return 'an issue occurred, response statuscode is: ${response.statusCode}';
 			};
 		};
 		
