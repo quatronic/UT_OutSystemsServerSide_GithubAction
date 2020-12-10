@@ -28,8 +28,8 @@ try {
 				testRunId = body.TestRunId
 			}else{
 				console.log('statuscode: ',response.statuscode)
-				console.log(`an issue occurred, response statuscode is: ${response.statusCode}`)
-				return `an issue occurred, response statuscode is: ${response.statusCode}`;
+				console.log(`an issue occurred, response: ${response}`)
+				return `an issue occurred, response: ${response}`;
 			};
 		};
 		
