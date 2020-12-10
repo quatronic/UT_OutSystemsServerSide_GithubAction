@@ -2,7 +2,7 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 
 try {
-  // `who-to-greet` input defined in action metadata file
+  // `unit test` input defined in action metadata file
   const targetURL = core.getInput('target-url');
   console.log(`URL ${targetURL}`);
   const SUToken = core.getInput('outsystems-serviceuser-token');
@@ -21,39 +21,19 @@ try {
 	var callback = (error,response,body) => {
 			if (error) {
 				console.log(error)
-				throw error
+				return error
 			}else if(response.statusCode == 200 || response.statusCode ==204) {
 				// do something with JSON, using the 'body' variable
 				console.log(body)
 				testRunId = body.TestRunId
 			}else{
-				throw 'an issue occurred'
+				console.log('an issue occurred')
+				return 'an issue occurred';
 			};
 		};
 		
 	request(options, callback);
 	
-	/*
-		//https://www.w3schools.com/js/js_json_http.asp
-	//https://stackoverflow.com/questions/32604460/xmlhttprequest-module-not-defined-found
-	var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-	var request = new XMLHttpRequest();
-    request.open("GET", targetURL+'/UTF_Connector/rest/TestControler/RunAll', false);
-    request.setRequestHeader("Content-Type", "application/json");
-    request.setRequestHeader('Authorization', 'Bearer ' + SUToken); 
-    request.onload = function(){
-		// Begin accessing JSON data here		
-		if (request.status >= 200 && request.status < 400) {
-			var data = JSON.parse(this.response)
-			testRunId = data.TestRunId;
-			console.log('TestRunId: ${testRunId}')
-		} else {
-			console.log('TestRunId: ${request.status}')
-			throw 'https request status is ${request.status}';
-		}
-	};
-    request.send();
-	*/
   
   const isSuccess = (testRunId!=0);
   core.setOutput("success", isSuccess);
