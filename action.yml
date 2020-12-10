@@ -1,16 +1,20 @@
 #https://docs.github.com/en/free-pro-team@latest/actions/creating-actions/creating-a-javascript-action
 # this yml will be updated later; the intent is to create a javascript based pipeline to trigger tests
 
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: 'Trigger the server side unit tests'
+description: 'This triggers the UTF tests of OutSystems via the exposed webservice and check the results'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  target-url:  # url of the domain where the unit tests exist
+    description: 'url of the domain where the unit tests exist'
     required: true
-    default: 'World'
+    default: 'https://myapp.outsystemscloud.com'
+  outsystems-serviceuser-token:  # a service user is required in OutSystems. Provide the token that belongs to this user
+    description: 'a service user is required in OutSystems. Provide the token that belongs to this user'
+    required: true
+    default: 'XYZ987&^%'
 outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+  success: # id of output
+    description: 'Boolean whether all tests succeeded or not'
 runs:
   using: 'node12'
-  main: 'index.js'
+  main: 'runUnitTests.js'
