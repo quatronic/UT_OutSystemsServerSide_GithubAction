@@ -19,6 +19,7 @@
   "homepage": "https://github.com/quatronic/GithubActions_OutSystems_CICD_js#readme",
   "dependencies": {
     "@actions/core": "^1.2.6",
-    "@actions/github": "^4.0.0"
+    "@actions/github": "^4.0.0",
+    "request": "^2.88.2"
   }
 }
