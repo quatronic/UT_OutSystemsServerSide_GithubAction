@@ -14,19 +14,23 @@ try {
 	var testRunId = 0
 	const request = require('request');
 
-	let url = targetURL+'/UTF_Connector/rest/TestControler/RunAll';
-	let options = {json: true};
-
-	request(url, options, (error, res, body) => {
-		if (error) {
-			return  console.log(error)
+	var options = {	url: targetURL+'/UTF_Connector/rest/TestControler/RunAll',
+					json: true,
+					Authorization: 'Bearer '+SUToken
+					};
+	var callback = (error,response,body) => {
+			if (error) {
+				return  console.log(error)
+			};
+			if (!error && res.statusCode == 200) {
+				// do something with JSON, using the 'body' variable
+				console.log(body)
+				testRunId = body.TestRunId
+			};
 		};
-
-		if (!error && res.statusCode == 200) {
-			// do something with JSON, using the 'body' variable
-			testRunId = body.TestRunId
-		};
-	});
+		
+	request(options, callback);
+	
 	/*
 		//https://www.w3schools.com/js/js_json_http.asp
 	//https://stackoverflow.com/questions/32604460/xmlhttprequest-module-not-defined-found
