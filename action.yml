@@ -11,7 +11,7 @@ inputs:
   outsystems-serviceuser-token:  # a service user is required in OutSystems. Provide the token that belongs to this user
     description: 'a service user is required in OutSystems. Provide the token that belongs to this user'
     required: true
-    default: 'XYZ987&^%'
+    default: ''
 outputs:
   success: # id of output
     description: 'Boolean whether all tests succeeded or not'
