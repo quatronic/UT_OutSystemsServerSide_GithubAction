@@ -22,7 +22,7 @@ try {
 			if (error) {
 				return  console.log(error)
 			};
-			if (!error && res.statusCode == 200) {
+			if (!error && response.statusCode == 200) {
 				// do something with JSON, using the 'body' variable
 				console.log(body)
 				testRunId = body.TestRunId
