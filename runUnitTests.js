@@ -27,9 +27,10 @@ try {
 				console.log(body)
 				testRunId = body.TestRunId
 			}else{
-				console.log('statuscode: ',response.statuscode)
-				console.log(`an issue occurred, response: ${response}`)
-				return `an issue occurred, response: ${response}`;
+				console.log('statuscode: ',response.statuscode);
+				var resultString = String(response);
+				console.log(`an issue occurred, response: ${resultString}`)
+				return `an issue occurred, response: ${resultString}`;
 			};
 		};
 		
