@@ -3,9 +3,9 @@ const github = require('@actions/github');
 
 try {
   // `unit test` input defined in action metadata file
-  const targetURL = core.getInput('target-url');
+  targetURL = core.getInput('target-url');
   console.log(`TargetURL: ${targetURL}`);
-  const SUToken = core.getInput('outsystems-serviceuser-token');
+  SUToken = core.getInput('outsystems-serviceuser-token');
   console.log(`BearerToken: ${SUToken}`);  
   
 
@@ -27,8 +27,9 @@ try {
 				console.log(body)
 				testRunId = body.TestRunId
 			}else{
-				console.log('an issue occurred, response statuscode is: ${response.statusCode}')
-				return 'an issue occurred, response statuscode is: ${response.statusCode}';
+				console.log('statuscode: ',response.statuscode)
+				console.log(`an issue occurred, response statuscode is: ${response.statusCode}`)
+				return `an issue occurred, response statuscode is: ${response.statusCode}`;
 			};
 		};
 		
