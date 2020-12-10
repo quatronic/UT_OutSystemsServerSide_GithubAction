@@ -8,32 +8,46 @@ try {
   const SUToken = core.getInput('outsystems-serviceuser-token');
   console.log(`Token ${SUToken}`);  
   
-  /*    url: ${{env.TARGET_URL}}/UTF_Connector/rest/TestControler/RunAll
-          method: GET
-          headers: '{"Authorization": "Bearer ${{secrets.OUTSYSTEMSSERVICEUSER_TOKEN}}"}'
-  */
+
 	// call the webservice which triggers the unit tests and returns a testRunId
-	//https://www.w3schools.com/js/js_json_http.asp
-	//https://stackoverflow.com/questions/32604460/xmlhttprequest-module-not-defined-found
+	//https://dev.to/isalevine/three-ways-to-retrieve-json-from-the-web-using-node-js-3c88
 	var testRunId = 0
+	const request = require('request');
+
+	let url = targetURL+'/UTF_Connector/rest/TestControler/RunAll';
+	let options = {json: true};
+
+	request(url, options, (error, res, body) => {
+		if (error) {
+			return  console.log(error)
+		};
+
+		if (!error && res.statusCode == 200) {
+			// do something with JSON, using the 'body' variable
+			testRunId = body.TestRunId
+		};
+	});
+	/*
+		//https://www.w3schools.com/js/js_json_http.asp
+	//https://stackoverflow.com/questions/32604460/xmlhttprequest-module-not-defined-found
 	var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 	var request = new XMLHttpRequest();
     request.open("GET", targetURL+'/UTF_Connector/rest/TestControler/RunAll', false);
     request.setRequestHeader("Content-Type", "application/json");
     request.setRequestHeader('Authorization', 'Bearer ' + SUToken); 
     request.onload = function(){
-		// Begin accessing JSON data here
-		var data = JSON.parse(this.response)
-			
+		// Begin accessing JSON data here		
 		if (request.status >= 200 && request.status < 400) {
+			var data = JSON.parse(this.response)
 			testRunId = data.TestRunId;
 			console.log('TestRunId: ${testRunId}')
 		} else {
-		console.log('error')
+			console.log('TestRunId: ${request.status}')
+			throw 'https request status is ${request.status}';
 		}
 	};
     request.send();
-    alert(request.responseText);
+	*/
   
   const isSuccess = (testRunId!=0);
   core.setOutput("success", isSuccess);
